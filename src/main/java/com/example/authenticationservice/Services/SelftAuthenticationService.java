@@ -6,6 +6,7 @@ import com.example.authenticationservice.Repository.SessionRepository;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.Charset;
+import java.security.SecureRandom;
 import java.util.Random;
 
 @Service
@@ -26,11 +27,21 @@ public class SelftAuthenticationService implements AuthenticationService{
     }
 
 
+    public String generate(){
+        final String str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" ;
+
+        SecureRandom random = new SecureRandom();
+
+        StringBuilder str1 = new StringBuilder(26);
+        for (int i = 0; i < 26; i++)
+            str1.append(str.charAt(random.nextInt(str.length())));
+        return str1.toString();
+    }
 
 
     @Override
     public String login(User user) {
-       String token="check";
+       String token=generate();
 
 
         Session session=new Session();
@@ -41,10 +52,6 @@ public class SelftAuthenticationService implements AuthenticationService{
 
         return token;
     }
-
-
-
-
 
 
     @Override
